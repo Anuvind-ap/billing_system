@@ -1,3 +1,4 @@
+import random
 import csv
 import tkinter as tk
 from tkinter.ttk import Combobox
@@ -14,13 +15,13 @@ squa = tk.IntVar(root)
 scos = tk.IntVar(root)
 samt = tk.IntVar(root)
 
+
+
 y = sbillno.get()
 x = y + ".csv"
 f = open(x, "a")
 rec = csv.writer(f, delimiter="|")
 rec.writerow(['ITEM', 'COST', "QUANTITY", "AMOUNT"])
-
-
 def nxtent():
     r = [Combobox.get(Citem), scos.get(), squa.get(), samt.get()]
     rec.writerow(r)
@@ -46,7 +47,7 @@ def setcost(event):
         pass
 
 
-Lbillno = tk.Label(root, text="BILL NO :")
+Lbillno = tk.Label(root, text="BILL INVOICE :")
 Lbillno.grid(row=1, column=1)
 Ebillno = tk.Entry(root, textvariable=sbillno)
 Ebillno.grid(row=1, column=2)
@@ -79,4 +80,3 @@ Lcost.grid(row=6, column=1)
 
 
 root.mainloop()
-
