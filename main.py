@@ -15,6 +15,8 @@ squa = tk.IntVar(root)
 scos = tk.IntVar(root)
 samt = tk.IntVar(root)
 stot = tk.IntVar(root)
+sname = tk.StringVar(root)
+sno = tk.IntVar(root)
 
 
 def total():
@@ -71,32 +73,30 @@ def setcost(event):
         pass
 
 
+# ---------------------------------------------------------------------------------------------------
 frame = tk.Frame(root, bg="powder blue", bd=5, relief='ridge')
 frame.grid()
 
-Ftitle = tk.Frame(frame, height=80, width=1036, bg="powder blue", bd=5, relief='ridge')
+Ftitle = tk.Frame(frame, height=80, width=800, bg="powder blue", bd=5, relief='ridge')
 Ftitle.grid(row=0, column=0, columnspa=3)
+Ltitle = tk.Label(Ftitle, text="Customer Billing Systems", font=("Arial",30 , "bold"), bg="powder blue", fg="blue")
+Ltitle.grid(row=0, column=0, columnspa=3, padx=304)
 
-Fdet = tk.Frame(frame, height=300, width=300, bg="powder blue", bd=5, relief='ridge')
-Fdet.grid(row=1, column=0)
+Fdet = tk.Frame(frame, height=80, width=800, bg="powder blue", bd=5, relief='ridge')
+Fdet.grid(row=1, column=0, columnspa=3)
 
 Fbill = tk.Frame(frame, height=300, width=300, bg="powder blue", bd=5, relief='ridge')
-Fbill.grid(row=1, column=1)
+Fbill.grid(row=2, column=0)
 Fbill1 = tk.Frame(Fbill, height=195, width=290, bg="powder blue", bd=5, relief='ridge')
 Fbill1.grid(row=0, column=0)
 Fbill2 = tk.Frame(Fbill, height=95, width=290, bg="powder blue", bd=5, relief='ridge')
 Fbill2.grid(row=2, column=0)
 
 Fdis = tk.Frame(frame, height=300, width=300, bg="powder blue", bd=5, relief='ridge')
-Fdis.grid(row=1, column=2)
+Fdis.grid(row=2, column=1)
+# ---------------------------------------------------------------------------------------------------
 
-Lbillno = tk.Label(Fbill1, bg="powder blue", text="BILL INVOICE :")
-Lbillno.grid(row=1, column=1)
-Ebillno = tk.Entry(Fbill1, textvariable=sbillno)
-Ebillno.grid(row=1, column=2)
-Bbillno = tk.Button(Fbill1, text="confirm", padx=18, command=create_csv)
-Bbillno.grid(row=1, column=3)
-
+# ---------------------------------------------------------------------------------------------------
 Litem = tk.Label(Fbill1, bg="powder blue", text="ITEM :")
 Litem.grid(row=2, column=1)
 Citem = Combobox(Fbill1, values=menu)
@@ -122,16 +122,39 @@ Eamt.grid(row=5, column=2)
 
 Bnxtent = tk.Button(Fbill1, text="NEXT\nENTRY", command=nxtent, pady=40, padx=18)
 Bnxtent.grid(row=2, column=3, rowspan=4)
+# -------------------------------------------------------------------------------------------------------
 
-Ltotal = tk.Label(Fbill2, text="Total :", bg="powder blue")
+# -------------------------------------------------------------------------------------------------------
+Ltotal = tk.Label(Fbill2, text="TOTAL\n(incl. tax):", bg="powder blue")
 Ltotal.grid(row=0, column=0)
 Etotal = tk.Entry(Fbill2, textvariable=stot)
-Etotal.grid(row=0, column=1)
+Etotal.grid(row=0, column=1, pady=5)
 
 Bexit = tk.Button(Fbill2, text="Exit", command=Exit, pady=5, padx=5)
 Bexit.grid(row=1, column=0)
 
 Bshow = tk.Button(Fbill2, text="Generate bill", pady=5, padx=5, command=total)
 Bshow.grid(row=1, column=1)
+# -----------------------------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------------------------------
+Lcname = tk.Label(Fdet, text="Customer Name :", bg="powder blue")
+Lcname.grid(row=0, column=0)
+Ecname = tk.Entry(Fdet, textvariable=sname)
+Ecname.grid(row=0, column=1)
+
+Lcno = tk.Label(Fdet, text="Contact No :", bg="powder blue")
+Lcno.grid(row=0, column=3)
+Ecno = tk.Entry(Fdet, textvariable=sno)
+Ecno.grid(row=0, column=4)
+
+
+Lbillno = tk.Label(Fdet, bg="powder blue", text="BILL INVOICE :")
+Lbillno.grid(row=0, column=5)
+Ebillno = tk.Entry(Fdet, textvariable=sbillno)
+Ebillno.grid(row=0, column=6)
+Bbillno = tk.Button(Fdet, text="confirm", padx=18, command=create_csv)
+Bbillno.grid(row=0, column=7)
+# --------------------------------------------------------------------------------------------------
 
 root.mainloop()
