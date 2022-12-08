@@ -120,7 +120,7 @@ Lamt.grid(row=5, column=1)
 Eamt = tk.Entry(Fbill1, textvariable=samt)
 Eamt.grid(row=5, column=2)
 
-Bnxtent = tk.Button(Fbill1, text="NEXT\nENTRY", command=nxtent, pady=40, padx=18)
+Bnxtent = tk.Button(Fbill1, text="NEXT\nENTRY", command=nxtent, pady=40)
 Bnxtent.grid(row=2, column=3, rowspan=4)
 # -------------------------------------------------------------------------------------------------------
 
