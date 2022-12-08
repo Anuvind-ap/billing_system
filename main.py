@@ -1,4 +1,3 @@
-import random
 import csv
 import tkinter as tk
 from tkinter.ttk import Combobox
@@ -16,12 +15,13 @@ scos = tk.IntVar(root)
 samt = tk.IntVar(root)
 
 
-
 y = sbillno.get()
 x = y + ".csv"
 f = open(x, "a")
 rec = csv.writer(f, delimiter="|")
 rec.writerow(['ITEM', 'COST', "QUANTITY", "AMOUNT"])
+
+
 def nxtent():
     r = [Combobox.get(Citem), scos.get(), squa.get(), samt.get()]
     rec.writerow(r)
