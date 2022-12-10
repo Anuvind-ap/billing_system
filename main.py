@@ -81,14 +81,13 @@ def setcost(event):
         pass
 
 
-# ---------------------------------------------------------------------------------------------------
 frame = tk.Frame(root, bg="powder blue", bd=5, relief='ridge')
 frame.grid()
 
+# ---------------------------------------------------------------------------------------------------
 Ftitle = tk.Frame(frame, height=80, width=800, bg="powder blue", bd=5, relief='ridge')
 Ftitle.grid(row=0, column=0, columnspa=3)
-Ltitle = tk.Label(Ftitle, text="Customer Billing Systems", font=("Arial",30 , "bold"), bg="powder blue", fg="blue")
-Ltitle.grid(row=0, column=0, columnspa=3, padx=304)
+
 
 Fdet = tk.Frame(frame, height=80, width=800, bg="powder blue", bd=5, relief='ridge')
 Fdet.grid(row=1, column=0, columnspa=3)
@@ -102,6 +101,11 @@ Fbill2.grid(row=2, column=0)
 
 Fdis = tk.Frame(frame, height=300, width=300, bg="powder blue", bd=5, relief='ridge')
 Fdis.grid(row=2, column=1)
+# ---------------------------------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------------------------------
+Ltitle = tk.Label(Ftitle, text="Customer Billing Systems", font=("Arial",30 , "bold"), bg="powder blue", fg="blue")
+Ltitle.grid(row=0, column=0, columnspa=3, padx=304)
 # ---------------------------------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------------------------------
