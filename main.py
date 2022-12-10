@@ -18,6 +18,12 @@ stot = tk.IntVar(root)
 sname = tk.StringVar(root)
 sno = tk.IntVar(root)
 
+Citem_val = []
+squa_val = []
+scos_val = []
+samt_val = []
+prevclick = 0
+
 
 def total():
     R = 0
@@ -59,10 +65,23 @@ def nxtent():
     if Bbillno["state"] == "disabled":
         r = [Combobox.get(Citem), scos.get(), squa.get(), samt.get()]
         rec.writerow(r)
-    squa.set(0)
+        Citem_val.append(Citem.current())
+        scos_val.append(scos.get())
+        squa_val.append(squa.get())
+        samt_val.append(samt.get())
+    Citem.delete(0, "end")
     scos.set(0)
+    squa.set(0)
     samt.set(0)
 
+
+def prevent():
+    global prevclick
+    prevclick += 1
+    Citem.current(Citem_val[len(Citem_val)-prevclick])
+    scos.set(scos_val[len(scos_val)-prevclick])
+    squa.set(squa_val[len(squa_val)-prevclick])
+    samt.set(samt_val[len(samt_val)-prevclick])
 
 def setamt(event):
     return samt.set(scos.get()*squa.get())
@@ -84,7 +103,7 @@ def setcost(event):
 frame = tk.Frame(root, bg="powder blue", bd=5, relief='ridge')
 frame.grid()
 
-# ---------------------------------------------------------------------------------------------------
+# ----------------------------------------DEFINING FRAMES(GUI)---------------------------------------------------
 Ftitle = tk.Frame(frame, height=80, width=800, bg="powder blue", bd=5, relief='ridge')
 Ftitle.grid(row=0, column=0, columnspa=3)
 
@@ -92,64 +111,68 @@ Ftitle.grid(row=0, column=0, columnspa=3)
 Fdet = tk.Frame(frame, height=80, width=800, bg="powder blue", bd=5, relief='ridge')
 Fdet.grid(row=1, column=0, columnspa=3)
 
-Fbill = tk.Frame(frame, height=300, width=300, bg="powder blue", bd=5, relief='ridge')
+Fbill = tk.Frame(frame, height=300, width=380, bg="powder blue", bd=5, relief='ridge')
 Fbill.grid(row=2, column=0)
-Fbill1 = tk.Frame(Fbill, height=195, width=290, bg="powder blue", bd=5, relief='ridge')
-Fbill1.grid(row=0, column=0)
-Fbill2 = tk.Frame(Fbill, height=95, width=290, bg="powder blue", bd=5, relief='ridge')
-Fbill2.grid(row=2, column=0)
+Fbill.grid_propagate(False)
+
+Ftotal = tk.Frame(frame, height=95, width=380, bg="powder blue", bd=5, relief='ridge')
+Ftotal.grid(row=3, column=0)
+Ftotal.grid_propagate(False)
 
 Fdis = tk.Frame(frame, height=300, width=300, bg="powder blue", bd=5, relief='ridge')
-Fdis.grid(row=2, column=1)
+Fdis.grid(row=2, column=1, rowspan=2)
 # ---------------------------------------------------------------------------------------------------
 
-# ---------------------------------------------------------------------------------------------------
-Ltitle = tk.Label(Ftitle, text="Customer Billing Systems", font=("Arial",30 , "bold"), bg="powder blue", fg="blue")
+# -----------------------------------------TITLE-----------------------------------------------------
+Ltitle = tk.Label(Ftitle, text="Customer Billing Systems", font=("Arial", 30, "bold"), bg="powder blue", fg="blue")
 Ltitle.grid(row=0, column=0, columnspa=3, padx=304)
 # ---------------------------------------------------------------------------------------------------
 
-# ---------------------------------------------------------------------------------------------------
-Litem = tk.Label(Fbill1, bg="powder blue", text="ITEM :")
+# ----------------------------------------ADDING ITEMS---------------------------------------------------
+Litem = tk.Label(Fbill, bg="powder blue", text="ITEM :")
 Litem.grid(row=2, column=1)
-Citem = Combobox(Fbill1, values=menu)
+Citem = Combobox(Fbill, values=menu)
 Citem.grid(row=2, column=2)
 Citem.current()
 Citem.bind('<<ComboboxSelected>>', setcost)
 
-Lcost = tk.Label(Fbill1, bg="powder blue", text="COST :")
+Lcost = tk.Label(Fbill, bg="powder blue", text="COST :")
 Lcost.grid(row=3, column=1)
-Ecost = tk.Entry(Fbill1, textvariable=scos)
+Ecost = tk.Entry(Fbill, textvariable=scos)
 Ecost.grid(row=3, column=2)
 
-Lqua = tk.Label(Fbill1, bg="powder blue", text="QUANTITY :")
+Lqua = tk.Label(Fbill, bg="powder blue", text="QUANTITY :")
 Lqua.grid(row=4, column=1)
-Equa = tk.Entry(Fbill1, textvariable=squa)
+Equa = tk.Entry(Fbill, textvariable=squa)
 Equa.grid(row=4, column=2)
 Equa.bind("<Enter>", setamt)
 
-Lamt = tk.Label(Fbill1, bg="powder blue", text="AMOUNT :")
+Lamt = tk.Label(Fbill, bg="powder blue", text="AMOUNT :")
 Lamt.grid(row=5, column=1)
-Eamt = tk.Entry(Fbill1, textvariable=samt)
+Eamt = tk.Entry(Fbill, textvariable=samt)
 Eamt.grid(row=5, column=2)
 
-Bnxtent = tk.Button(Fbill1, text="NEXT\nENTRY", command=nxtent, pady=40)
+Bnxtent = tk.Button(Fbill, text="NEXT\nENTRY", command=nxtent, pady=40)
 Bnxtent.grid(row=2, column=3, rowspan=4)
+
+Bprevent = tk.Button(Fbill, text="<", command=prevent, padx=10)
+Bprevent.grid(row=6, column=1)
 # -------------------------------------------------------------------------------------------------------
 
-# -------------------------------------------------------------------------------------------------------
-Ltotal = tk.Label(Fbill2, text="TOTAL\n(incl. tax):", bg="powder blue")
+# -----------------------------------TOTAL AMOUNT AND EXIT BUTTON----------------------------------------
+Ltotal = tk.Label(Ftotal, text="TOTAL\n(incl. tax):", bg="powder blue")
 Ltotal.grid(row=0, column=0)
-Etotal = tk.Entry(Fbill2, textvariable=stot)
+Etotal = tk.Entry(Ftotal, textvariable=stot)
 Etotal.grid(row=0, column=1, pady=5)
 
-Bexit = tk.Button(Fbill2, text="Exit", command=Exit, pady=5, padx=5)
+Bexit = tk.Button(Ftotal, text="Exit", command=Exit, pady=5, padx=5)
 Bexit.grid(row=1, column=0)
 
-Bshow = tk.Button(Fbill2, text="Generate bill", pady=5, padx=5, command=total)
+Bshow = tk.Button(Ftotal, text="Generate bill", pady=5, padx=5, command=total)
 Bshow.grid(row=1, column=1)
 # -----------------------------------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------------------------------
+# -----------------------------------CUSTOMER DETAILS--------------------------------------------------
 Lcname = tk.Label(Fdet, text="Customer Name :", bg="powder blue")
 Lcname.grid(row=0, column=0)
 Ecname = tk.Entry(Fdet, textvariable=sname)
