@@ -121,8 +121,8 @@ Ftotal = tk.Frame(frame, height=95, width=380, bg="powder blue", bd=5, relief='r
 Ftotal.grid(row=3, column=0)
 Ftotal.grid_propagate(False)
 
-Fdis = tk.Frame(frame, height=300, width=300, bg="powder blue", bd=5, relief='ridge')
-Fdis.grid(row=2, column=1, rowspan=2)
+Fmenu = tk.Frame(frame, height=300, width=300, bg="powder blue", bd=5, relief='ridge')
+Fmenu.grid(row=2, column=1, rowspan=2)
 # ---------------------------------------------------------------------------------------------------
 
 # -----------------------------------------TITLE-----------------------------------------------------
