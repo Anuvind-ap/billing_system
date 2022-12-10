@@ -24,6 +24,9 @@ def total():
     f.seek(0)
     row_read = csv.reader(f, delimiter="|")
     next(row_read)
+    next(row_read)
+    next(row_read)
+    next(row_read)
     for row in row_read:
         R += int(row[3])
     stot.set(R)
@@ -34,13 +37,18 @@ def Exit():
 
 
 def create_csv():
-    if sbillno.get() != "":
+    if sbillno.get() != "" and sname.get() != "" and sno.get() != 0:
         y = sbillno.get()
+        a = sname.get()
+        b = sno.get()
         x = y + ".csv"
         global f
         f = open(x, "a+")
         global rec
         rec = csv.writer(f, delimiter="|")
+        rec.writerow(["CUSTOMER NAME", a])
+        rec.writerow(["CONTACT NO.", b])
+        rec.writerow([])
         rec.writerow(['ITEM', 'COST', "QUANTITY", "AMOUNT"])
         Bbillno["state"] = "disabled"
     else:
