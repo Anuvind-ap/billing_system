@@ -76,12 +76,14 @@ def nxtent():
 
 
 def prevent():
-    global prevclick
-    prevclick += 1
-    Citem.current(Citem_val[len(Citem_val)-prevclick])
-    scos.set(scos_val[len(scos_val)-prevclick])
-    squa.set(squa_val[len(squa_val)-prevclick])
-    samt.set(samt_val[len(samt_val)-prevclick])
+    if Bbillno["state"] == "disabled":
+        global prevclick
+        prevclick += 1
+        Citem.current(Citem_val[len(Citem_val)-prevclick])
+        scos.set(scos_val[len(scos_val)-prevclick])
+        squa.set(squa_val[len(squa_val)-prevclick])
+        samt.set(samt_val[len(samt_val)-prevclick])
+
 
 def setamt(event):
     return samt.set(scos.get()*squa.get())
