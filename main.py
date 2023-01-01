@@ -8,8 +8,10 @@ root.config(background="powder blue")
 menu = ("pizza", "burger", "pasta", "noodles")
 
 # width x height
-root.geometry("1100x800")
+root.geometry("1020x370")
+root.maxsize(1020, 370)
 
+# ---------VARIABLES-------------
 sbillno = tk.StringVar(root)
 squa = tk.IntVar(root)
 scos = tk.IntVar(root)
@@ -17,12 +19,9 @@ samt = tk.IntVar(root)
 stot = tk.IntVar(root)
 sname = tk.StringVar(root)
 sno = tk.IntVar(root)
+# --------------------------------
 
-Citem_val = []
-squa_val = []
-scos_val = []
-samt_val = []
-prevclick = 0
+# ------BACKEND(FUNCTIONS)---------
 
 
 def total():
@@ -62,27 +61,13 @@ def create_csv():
 
 
 def nxtent():
-    if Bbillno["state"] == "disabled":
+    if Bbillno["state"] == "disabled" and Citem.current() != -1:
         r = [Combobox.get(Citem), scos.get(), squa.get(), samt.get()]
         rec.writerow(r)
-        Citem_val.append(Citem.current())
-        scos_val.append(scos.get())
-        squa_val.append(squa.get())
-        samt_val.append(samt.get())
     Citem.delete(0, "end")
     scos.set(0)
     squa.set(0)
     samt.set(0)
-
-
-def prevent():
-    if Bbillno["state"] == "disabled":
-        global prevclick
-        prevclick += 1
-        Citem.current(Citem_val[len(Citem_val)-prevclick])
-        scos.set(scos_val[len(scos_val)-prevclick])
-        squa.set(squa_val[len(squa_val)-prevclick])
-        samt.set(samt_val[len(samt_val)-prevclick])
 
 
 def setamt(event):
@@ -102,35 +87,54 @@ def setcost(event):
         pass
 
 
+def receipt():
+    if Bbillno["state"] == "disabled":
+        textarea.delete(1.0, tk.END)
+        textarea.insert(tk.END, "   THE URBAN CAFE   ")
+        textarea.insert(tk.END, f"\nBILL NO. : {sbillno.get()}")
+        textarea.insert(tk.END, f"\nCUSTOMER NAME : {sname.get()}")
+        textarea.insert(tk.END, f"\nMOBILE NO. : {sno.get()}")
+        textarea.insert(tk.END, "\n\nITEMS\tCOST\tQUANTITY\tAMOUNT")
+        f.seek(0)
+        read = csv.reader(f, delimiter="|")
+        next(read)
+        next(read)
+        next(read)
+        next(read)
+        for i in read:
+            textarea.insert(tk.END, f"\n{i[0]}\t{i[1]}\t{i[2]} \t{i[3]}")
+
+
+# -------------------------------------------------------------------------------------------------------------
+
+# ---------------------------------------------MAIN FRAME------------------------------------------------------
 frame = tk.Frame(root, bg="powder blue", bd=5, relief='ridge')
-frame.grid()
+frame.place(relx=0, rely=0, height=361, width=1013)
+# -------------------------------------------------------------------------------------------------------------
 
-# ----------------------------------------DEFINING FRAMES(GUI)---------------------------------------------------
-Ftitle = tk.Frame(frame, height=80, width=800, bg="powder blue", bd=5, relief='ridge')
-Ftitle.grid(row=0, column=0, columnspa=3)
+# ----------------------------------------DEFINING FRAMES(GUI)-------------------------------------------------
+Ftitle = tk.Frame(frame, bg="powder blue", bd=5, relief='ridge')
+Ftitle.place(x=1, y=1, height=68, width=1000)
 
+Fdet = tk.Frame(frame, bg="powder blue", bd=5, relief='ridge')
+Fdet.place(x=1, y=71, height=45, width=1000)
 
-Fdet = tk.Frame(frame, height=80, width=800, bg="powder blue", bd=5, relief='ridge')
-Fdet.grid(row=1, column=0, columnspa=3)
+Fbill = tk.Frame(frame, bg="powder blue", bd=5, relief='ridge')
+Fbill.place(x=1, y=119, height=135, width=380)
 
-Fbill = tk.Frame(frame, height=300, width=380, bg="powder blue", bd=5, relief='ridge')
-Fbill.grid(row=2, column=0)
-Fbill.grid_propagate(False)
+Ftotal = tk.Frame(frame, bg="powder blue", bd=5, relief='ridge')
+Ftotal.place(x=1, y=256, height=93, width=380)
 
-Ftotal = tk.Frame(frame, height=95, width=380, bg="powder blue", bd=5, relief='ridge')
-Ftotal.grid(row=3, column=0)
-Ftotal.grid_propagate(False)
+Frec = tk.Frame(frame, bd=5, relief='ridge')
+Frec.place(x=384, y=119, height=230, width=617)
+# ------------------------------------------------------------------------------------------------------------
 
-Fmenu = tk.Frame(frame, height=300, width=300, bg="powder blue", bd=5, relief='ridge')
-Fmenu.grid(row=2, column=1, rowspan=2)
-# ---------------------------------------------------------------------------------------------------
+# ---------------------------------------------TITLE----------------------------------------------------------
+Ltitle = tk.Label(Ftitle, text="THE URBAN CAFE", font=("Arial", 45, "bold"), bg="powder blue", fg="blue")
+Ltitle.grid(row=0, column=0, columnspan=3, padx=300)
+# ------------------------------------------------------------------------------------------------------------
 
-# -----------------------------------------TITLE-----------------------------------------------------
-Ltitle = tk.Label(Ftitle, text="Customer Billing Systems", font=("Arial", 30, "bold"), bg="powder blue", fg="blue")
-Ltitle.grid(row=0, column=0, columnspa=3, padx=304)
-# ---------------------------------------------------------------------------------------------------
-
-# ----------------------------------------ADDING ITEMS---------------------------------------------------
+# ---------------------------------------------ITEMS----------------------------------------------------------
 Litem = tk.Label(Fbill, bg="powder blue", text="ITEM :")
 Litem.grid(row=2, column=1)
 Citem = Combobox(Fbill, values=menu)
@@ -157,11 +161,9 @@ Eamt.grid(row=5, column=2)
 Bnxtent = tk.Button(Fbill, text="NEXT\nENTRY", command=nxtent, pady=40)
 Bnxtent.grid(row=2, column=3, rowspan=4)
 
-Bprevent = tk.Button(Fbill, text="<", command=prevent, padx=10)
-Bprevent.grid(row=6, column=1)
-# -------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------
 
-# -----------------------------------TOTAL AMOUNT AND EXIT BUTTON----------------------------------------
+# --------------------------------------TOTAL AMOUNT AND EXIT BUTTON-------------------------------------------
 Ltotal = tk.Label(Ftotal, text="TOTAL\n(incl. tax):", bg="powder blue")
 Ltotal.grid(row=0, column=0)
 Etotal = tk.Entry(Ftotal, textvariable=stot)
@@ -170,11 +172,11 @@ Etotal.grid(row=0, column=1, pady=5)
 Bexit = tk.Button(Ftotal, text="Exit", command=Exit, pady=5, padx=5)
 Bexit.grid(row=1, column=0)
 
-Bshow = tk.Button(Ftotal, text="Generate bill", pady=5, padx=5, command=total)
+Bshow = tk.Button(Ftotal, text="Get Total", pady=5, padx=5, command=lambda: [total(), receipt()])
 Bshow.grid(row=1, column=1)
-# -----------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------
 
-# -----------------------------------CUSTOMER DETAILS--------------------------------------------------
+# ------------------------------------------CUSTOMER DETAILS------------------------------------------------
 Lcname = tk.Label(Fdet, text="Customer Name :", bg="powder blue")
 Lcname.grid(row=0, column=0)
 Ecname = tk.Entry(Fdet, textvariable=sname)
@@ -192,6 +194,16 @@ Ebillno = tk.Entry(Fdet, textvariable=sbillno)
 Ebillno.grid(row=0, column=6)
 Bbillno = tk.Button(Fdet, text="confirm", padx=18, command=create_csv)
 Bbillno.grid(row=0, column=7)
-# --------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------
+
+# ----------------------------------------------RECEIPT----------------------------------------------------
+Ldish = tk.Label(Frec, text="RECEIPT")
+Ldish.pack(side="top")
+scrol = tk.Scrollbar(Frec, orient="vertical")
+scrol.pack(side="right", fill="y")
+textarea = tk.Text(Frec, font="arial 15", yscrollcommand=scrol.set)
+textarea.pack(fill="both")
+scrol.config(command=textarea.yview)
+# ----------------------------------------------------------------------------------------------------------
 
 root.mainloop()
