@@ -1,6 +1,6 @@
 # Billing System Program with GUI using Tkinter
 
-![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+![GitHub license](https://img.shields.io/badge/license-AGPL%20v3-blue.svg)
 
 This is a simple Billing System program with a graphical user interface (GUI) built using the Tkinter library in Python. This program allows users to create and manage invoices, calculate totals, and generate printable receipts.
 
