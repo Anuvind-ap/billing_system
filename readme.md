@@ -11,7 +11,6 @@ This is a simple Billing System program with a graphical user interface (GUI) bu
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -43,13 +42,14 @@ Follow these instructions to get the Billing System program up and running on yo
    ```
 2. Change the working directory to the project folder:
 
-```bash
-cd billing_system
-```
+   ```bash
+   cd billing_system
+   ```
 3. Install the required dependencies:
-```bash
-pip install -r requirements.txt
-```
+
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### Usage
 To run the Billing System program, execute the following command:
@@ -67,3 +67,9 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 2. Create a new branch for your feature or bug fix.
 3. Make your changes and test thoroughly.
 4. Create a pull request with a clear description of your changes.
+
+### License
+[![GNU Affero General Public License v3.0](https://www.gnu.org/graphics/agplv3-155x51.png)](https://www.gnu.org/licenses/agpl-3.0.en.html#header)    
+Licensed under GNU AGPL v3.0.   
+Selling the codes to other people for money is *strictly prohibited*.
+
